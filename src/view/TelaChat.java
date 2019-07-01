@@ -8,18 +8,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
-public class TelaChat {
-	// Declara Tela (JPanel)
-	private JPanel panelChat; 
+public class TelaChat extends JPanel{
+ 
 	// Declara Componentes
 	private JTextArea textAreaConversas;
 	private JScrollPane scrollPane;
 	private JTextField textFieldChat;
 
 	public TelaChat(){
-
+		this.setLayout(new GridBagLayout());
 		// Cria nova Tela (JPanel)
-		setPanelChat(new JPanel(new GridBagLayout()));
 		setTextFieldChat(new JTextField(20));
 		setTextAreaConversas(new JTextArea(5, 20));
 		getTextAreaConversas().setEditable(false);
@@ -28,12 +26,12 @@ public class TelaChat {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		getPanelChat().add(scrollPane, c);
+		this.add(scrollPane, c);
 
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
 		c.weighty = 1.0;
-		getPanelChat().add(textFieldChat, c);
+		this.add(textFieldChat, c);
 //		getPanelChat().add(buttonChat);
 	}
 //	// Manipulador de Acoes - Botoes (BottonsChat)
@@ -82,10 +80,5 @@ public class TelaChat {
 //	public void setButtonChat(JButton buttonChat) {
 //		this.buttonChat = buttonChat;
 //	}
-	public JPanel getPanelChat() {
-		return panelChat;
-	}
-	public void setPanelChat(JPanel panelChat) {
-		this.panelChat = panelChat;
-	}
+
 }

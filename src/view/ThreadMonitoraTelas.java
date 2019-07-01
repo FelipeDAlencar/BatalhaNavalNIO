@@ -83,7 +83,7 @@ public class ThreadMonitoraTelas extends Thread {
 								telaTabuleiro.getButtonsTab1()[posicao].setFundo(i);
 								// Adicionando Imagem do Navio a Tela Player
 								String dirNavio = "img/navios/navio" + Integer.toString((jogador.getNumEscolhas())) + ".jpg";
-								telaJogador.getNavios()[jogador.getNumEscolhas()-1].setIcon(new ImageIcon(dirNavio));
+								telaJogador.getShip()[jogador.getNumEscolhas()-1].setIcon(new ImageIcon(dirNavio));
 
 							}
 							System.out.println("Thread Monitora Telas - Numero de Escolhas: " + jogador.getNumEscolhas() +" posicao: "+posicao);
@@ -114,7 +114,7 @@ public class ThreadMonitoraTelas extends Thread {
 					}
 					jogador.getNavios().get(jogador.getNumEscolhas()-1).setVivo(false); // Mata Navio
 					telaNavios.setVolta(false); // Marca volta da Tela Console como FALSE
-					telaJogador.getNavios()[jogador.getNumEscolhas()-1].setIcon(new ImageIcon()); // Remove Navio da Tela Player
+					telaJogador.getShip()[jogador.getNumEscolhas()-1].setIcon(new ImageIcon()); // Remove Navio da Tela Player
 					System.out.println("Thread Monitora Telas - Voltando escolha...");
 				}
 				if (jogador.getNumEscolhas() == 6) { // Se roda igual a 6 comeca o jogo
@@ -160,7 +160,7 @@ public class ThreadMonitoraTelas extends Thread {
 								// Diminui 1 da vida do Heroi (Navio)
 								jogador.getNavios().get(posicao).setVida(jogador.getNavios().get(posicao).getVida()-1);
 								// Retira uma ponto de cada barra de vida
-								telaJogador.getCaixaVida().getComponent(jogador.getVida()).setVisible(false);
+								telaJogador.getBoxLife().getComponent(jogador.getVida()).setVisible(false);
 								telaNavios.getCaixaVida()[posicao].getComponent(jogador.getNavios().get(posicao).getVida()).setVisible(false);
 
 								CardLayout cl = (CardLayout)(telaTabuleiro.getCards().getLayout());
@@ -227,7 +227,7 @@ public class ThreadMonitoraTelas extends Thread {
 						System.out.println("Numero de conexoes: "+jogador.getNumeroConexoes());
 
 				//		System.out.println("Comandos de entradas 4: "+ cliente.getComandoEntrada());
-						telaJogador.getNome().setText(jogador.getNome());
+						telaJogador.getLabelPlayerName().setText("Jogador: "+jogador.getNome());
 
 						Thread.sleep(500);
 						if (cliente.getComandoEntrada().equals("$OK1")){
@@ -235,7 +235,7 @@ public class ThreadMonitoraTelas extends Thread {
 							System.out.println("Comandos de entradas 3: "+ cliente.getComandoEntrada());
 
 							jogador.setNome(telaConexao.getTextFieldLogin().getText());
-							telaJogador.getNome().setText(jogador.getNome());
+							telaJogador.getLabelPlayerName().setText("Jogador: " +jogador.getNome());
 						}
 
 						Thread.sleep(500);

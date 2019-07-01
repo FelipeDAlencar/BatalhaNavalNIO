@@ -6,13 +6,11 @@ import javax.swing.*;
 
 import model.Jogador;
 
-public class TelaPlayer {
-	// Declara tela Principal
-	private JPanel panelPlayer;
+public class TelaPlayer extends JPanel{
 	// Declara Sub-Telas
 	private JPanel telaImg;
-//	private JPanel telaMenu;
 	private JPanel telaVida;
+	
 	// Declara Sub-sub-Telas
 	private JPanel caixaVida;
 	// Declara Componentes
@@ -24,8 +22,8 @@ public class TelaPlayer {
 
 	// Construtor, recebe Jogador	
 	public TelaPlayer(Jogador player) {
-		// Instancia Tela
-		this.panelPlayer = new JPanel(new BorderLayout());
+		this.setLayout(new BorderLayout());
+	
 		// Instancia Sub-telas
 		this.telaImg = new JPanel();
 		this.telaImg.setLayout(new BoxLayout(telaImg,BoxLayout.Y_AXIS));
@@ -50,16 +48,10 @@ public class TelaPlayer {
 		this.telaImg.add(this.img);
 		this.telaImg.add(this.nome);
 		// Adicionando Telas a Tela Principal
-//		this.panelPlayer.add(telaMenu, BorderLayout.CENTER);
-		this.panelPlayer.add(telaImg, BorderLayout.WEST);
+		this.add(telaImg, BorderLayout.WEST);
 	}
 	// Getters and Setters
-	public JPanel getPanelPlayer() {
-		return panelPlayer;
-	}
-	public void setPanelPlayer(JPanel panelPlayer) {
-		this.panelPlayer = panelPlayer;
-	}
+
 	public JPanel getTelaImg() {
 		return telaImg;
 	}

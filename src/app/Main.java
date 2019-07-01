@@ -39,7 +39,7 @@ public class Main {
 		TelaPrincipal telaPrincipal = new TelaPrincipal(cliente, jogador);	
 		TelaConsole telaConsole = new TelaConsole(cards, telaPrincipal);
 		// Adiciona Telas do Jogo ao Card De Telas
-		cards.add(telaInicio.getTelaInicio(), "1");
+		cards.add(telaInicio, "1");
 		cards.add(telaConsole.getTelaConsole(), "2");
 		cards.add(telaPrincipal.getTelaPrincipal(), "3");        
 
@@ -48,7 +48,8 @@ public class Main {
 		Container cont = frame.getContentPane();
 		cont.add(cards);
 		// Tamanho e Visivel
-		frame.setSize(1000, 660);
+		frame.setSize(400,400 );
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		// Aponta o processador para thread.
@@ -58,7 +59,8 @@ public class Main {
 				telaPrincipal.getTelaTabuleiro(), telaPrincipal.getTelaNavios(), telaPrincipal.getTelaChat(),
 				telaInicio.getTelaConexao(),  telaInicio));
 		
-		
+		Servidor_NIO server = new Servidor_NIO();
+		server.inicializar();
 
 	}
 }

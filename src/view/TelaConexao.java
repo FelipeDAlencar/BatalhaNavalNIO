@@ -1,32 +1,31 @@
 package view;
 
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.io.PrintStream;
-
 import javax.swing.*;
-
-import model.Jogador;
 import socket.Cliente;
 
-public class TelaConexao {
-	// Declara Telas (JPanel)
-	private JPanel panelConexao;
+public class TelaConexao extends JPanel{
+	// Declara Telas
 	private JPanel cont;
-	// Componentes do Menu de Conexao com Servidor
-	private JLabel serverLabel;
-	private JLabel portaLabel;
-	private JLabel nomeJogador;
-	private JButton conectaServer;
-	private JButton closeServer;
-	private JTextField textFieldHost;
-	private JTextField textFieldPorta;
-	private JTextField textFieldLogin;
 
-	// Cria e instancia Classe de Comunicacao de Dados
+	// Declaração dos componentes para conexão com servidor
+	private JLabel labelServer;
+	private JLabel labelPort;
+	private JLabel labelNamePlayer;
+	private JButton btnConnect;
+	private JButton btnClose;
+	private JTextField tfdHost;
+	private JTextField tfdPort;
+	private JTextField tfdNamePlayer;
+
+	// Declaração da Classe de Comunicacao de Dados
 	private Cliente cliente;
+
+	//Declara Controlador dos botões
+	ButtonConexaoHandler handlerCon;
 
 	// Variaveis auxiliares
 	private String host;
@@ -34,114 +33,130 @@ public class TelaConexao {
 	private PrintStream saida;
 	private String comandoSaida = "";
 	private boolean status = false;
-	
+
 	// Construtor da Tela
 	public TelaConexao(JPanel cont, Cliente cliente) {
 		// Recebe dados por parametro
 		this.cont = cont;
 		this.cliente = cliente;
-		// Cria nova Tela (JPanel)
-		setPanelConexao(new JPanel(new GridLayout(5, 2)));
-		// Cria os Componentes - Campos (TextField) e botoes (JButton)
-		setServerLabel(new JLabel("Servidor"));
-		setTextFieldHost(new JTextField(30));
-		getTextFieldHost().setText("localhost");
-		setPortaLabel(new JLabel("Porta"));
-		setTextFieldPorta(new JTextField(5));
-		getTextFieldPorta().setText("22222");
-		setLoginLabel(new JLabel("Login"));
-		setTextFieldLogin(new JTextField("teste"));
 
-		setConectaServer(new JButton("Conecta no servidor"));
-		setCloseServer(new JButton("Desconecta"));
-		// Adiciona objetos na Tela (JPanel)
-		getPanelConexao().add(getServerLabel());
-		getPanelConexao().add(getTextFieldHost());
-		getPanelConexao().add(getPortaLabel());
-		getPanelConexao().add(getTextFieldPorta());
-		getPanelConexao().add(getLoginLabel());
-		getPanelConexao().add(getTextFieldLogin());
-		getPanelConexao().add(getConectaServer());
-		getPanelConexao().add(getCloseServer());
-		// Cria handlerCon (Manipulador de Botoes - Acoes)
-		ButtonConexaoHandler handlerCon = new ButtonConexaoHandler();
-		getCloseServer().addActionListener(handlerCon);
-		getConectaServer().addActionListener(handlerCon);
-		// Desabilita botao
-		getCloseServer().setEnabled(false);
+		this.setLayout(new GridLayout(10,1));
+
+		// instanciando componentes do formulário
+		this.labelServer = new JLabel("Servidor:");
+		this.tfdHost = new JTextField("localhost");
+		this.labelPort = new JLabel("Porta:");
+		this.tfdPort = new JTextField("22222");
+		this.labelNamePlayer = new JLabel("Nome do Jogador:                 ");
+		this.tfdNamePlayer = new JTextField();
+
+
+		//Instanciando botoes
+		this.btnConnect = new JButton("Iniciar");
+		this.btnClose = new JButton("Cancelar");
+
+		// Adiciona Componentes de formulário
+		this.add(this.labelServer);
+		this.add(this.tfdHost);
+		this.add(this.labelPort);
+		this.add(this.tfdPort);
+		this.add(this.labelNamePlayer);
+		this.add(this.tfdNamePlayer);
+		this.add(new JLabel());
+		this.add(this.btnConnect);
+
+
+
+
+		//Adicionando ações aos botões
+		this.handlerCon = new ButtonConexaoHandler(this);
+		this.btnConnect.addActionListener(this.handlerCon);
+		this.btnClose.addActionListener(this.handlerCon);
+
+
 	}
-	// Manipulador de Acoes - Botoes (Conecta, Desconecta)
+	
+	//Controlador dos botões
 	private class ButtonConexaoHandler implements ActionListener {
- 		public void actionPerformed(ActionEvent event) {
-			// Se botao Conecta for "apertado" 
-			if (event.getSource() == getConectaServer()) {
+		JPanel panelConexao;
+		public ButtonConexaoHandler(JPanel panelConexao) {
+			this.panelConexao = panelConexao;
+		}
+
+		public void actionPerformed(ActionEvent event) {
+			//Se for clicado em iniciar
+			if (event.getSource() == btnConnect) {
+				//Obtem dados para conexão
 				host = getTextFieldHost().getText();
 				porta = Integer.parseInt(getTextFieldPorta().getText());
-				// Adiciona Host de Porta na Classe de Comunicacao de Dados
-				getCliente().setPorta(porta);
-				getCliente().setHost(host);
-				// Chama metodo conecta da Classe de Comunicacao de Dados 
+
+				cliente.setPorta(porta);
+				cliente.setHost(host);
+
+				// Inicia a conexão do jogador
 				try {
-					getCliente().setStatus(getCliente().conecta());
+					cliente.setStatus(cliente.conecta());
 				} catch (Exception e) {
 					System.out.println("Erro ao iniciar comunicacao");
 					e.printStackTrace();
-				} // Retorna TRUE se conectar
-				getConectaServer().setEnabled(false); // Desabilita botao Conecta
-				getCloseServer().setEnabled(true); // Habilita botao Desconecta
+
+				} 
+
+				//Invertendo Botões
+				panelConexao.remove(btnConnect);
+				panelConexao.add(btnClose);
 			} 
-			// Se botao Desconta for "apertado"
-			else if (event.getSource() == getCloseServer()) {
-				// Chama metodo desconecta da Classe de Comunicacao de Dados 
-//				cliente.desconecta();
-				getConectaServer().setEnabled(true); // Habilita botao
-				getCloseServer().setEnabled(false); // Desabilita botao
+
+
+			//Se for clicado em cancelar
+			else{
+				// Cliente é desconectado do servidor 
+				//cliente.desconecta();
+
+				//inverte botões
+				panelConexao.remove(btnClose);
+				panelConexao.add(btnConnect);
 				setStatus(false); 
 			}
 		}
 	}
-	// Getters and Setters
-	public JPanel getPanelConexao() {
-		return panelConexao;
+
+
+	public JLabel getlabelPort() {
+		return labelPort;
 	}
-	public void setPanelConexao(JPanel panelConexao) {
-		this.panelConexao = panelConexao;
-	}
-	public JLabel getPortaLabel() {
-		return portaLabel;
-	}
-	public void setPortaLabel(JLabel portaLabel) {
-		this.portaLabel = portaLabel;
+	public void setlabelPort(JLabel labelPort) {
+		this. labelPort = labelPort;
 	}
 	public JLabel getServerLabel() {
-		return serverLabel;
+		return labelServer;
 	}
 	public void setServerLabel(JLabel server) {
-		this.serverLabel = server;
+		this.labelServer = server;
 	}
 	public JButton getConectaServer() {
-		return conectaServer;
+		return btnConnect;
 	}
 	public void setConectaServer(JButton conectaServer) {
-		this.conectaServer = conectaServer;
+		this.btnConnect = conectaServer;
 	}
 	public JButton getCloseServer() {
-		return closeServer;
+		return btnClose;
 	}
 	public void setCloseServer(JButton closeServer) {
-		this.closeServer = closeServer;
+		this.btnClose = closeServer;
 	}
 	public JTextField getTextFieldHost() {
-		return textFieldHost;
+		return tfdHost;
 	}
 	public void setTextFieldHost(JTextField textFieldHost) {
-		this.textFieldHost = textFieldHost;
+		this.tfdHost = textFieldHost;
 	}
 	public JTextField getTextFieldPorta() {
-		return textFieldPorta;
+		return tfdPort;
 	}
 	public void setTextFieldPorta(JTextField textFieldPorta) {
-		this.textFieldPorta = textFieldPorta;
+		this.tfdPort = textFieldPorta;
 	}
 	public Cliente getCliente() {
 		return cliente;
@@ -180,17 +195,17 @@ public class TelaConexao {
 		this.status = status;
 	}
 	public JLabel getLoginLabel() {
-		return nomeJogador;
+		return labelNamePlayer;
 	}
 	public void setLoginLabel(JLabel loginLabel) {
-		this.nomeJogador = loginLabel;
+		this.labelNamePlayer = loginLabel;
 	}
 
 	public JTextField getTextFieldLogin() {
-		return textFieldLogin;
+		return tfdNamePlayer;
 	}
 	public void setTextFieldLogin(JTextField textFieldLogin) {
-		this.textFieldLogin = textFieldLogin;
+		this.tfdNamePlayer = textFieldLogin;
 	}
 	public JPanel getCont() {
 		return cont;
