@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -10,53 +9,52 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import javafx.scene.layout.Border;
 import model.Jogador;
 import socket.Cliente;
 
-public class TelaInicio extends JPanel{
-	//Declarando tela com formulario 
+public class TelaInicio {
+	// Declara Classe Grafica
  	private TelaConexao telaConexao;
 
- 	//Declarando Panels para imagem de loading
-	private JPanel panelLoading;
-	private Container containerInformations;
-	private JLabel imgLoading;
+	private JPanel telaInicio;
+	private JPanel telaBuffer;
+	private Container telaInformacoes;
+	private JLabel buffer;
 
-	//Declarando Objetos necessarios para o jogador
+	// Declara Classe de Comunicacao de Dados
 	private Cliente cliente;
 	private Jogador jogador;
-	
+	// Construtor, recebe a tela Principal, Cliente (Pacote de Comunicacao e o Card de delas)
 	public TelaInicio(Cliente cliente){
-		this.cliente = cliente;
-		
-		//Instanciando Painel da Imagem
-		this.panelLoading = new JPanel(new FlowLayout());
-		
-		//Instanciando Container da Imagem, Para consegir centralizar
-		this.containerInformations = new Container();
-		this.containerInformations.setLayout(new BoxLayout(this.containerInformations, BoxLayout.PAGE_AXIS));
-		
-		//Instanciando imagem
-		this.imgLoading = new JLabel();
-		this.imgLoading.setIcon(new ImageIcon("img/loading1.gif"));
-		this.imgLoading.setVisible(false);
-		
-		//Iniciando a tela de coneção
-		this.telaConexao = new TelaConexao(this, cliente);
-		
-		//adicionando imagem ao painel
-		this.panelLoading.add(this.imgLoading);
-		
-		//adicionando paineis ao conteiner
-		this.containerInformations.add(this.telaConexao, Component.CENTER_ALIGNMENT);
-		this.containerInformations.add(this.panelLoading, Component.CENTER_ALIGNMENT);
 
-		//adicionando container a tela
-	    this.add(this.containerInformations, BorderLayout.SOUTH);
+		this.cliente = cliente;
+		this.telaInicio = new JPanel();
+		this.buffer = new JLabel();
+		this.buffer.setIcon(new ImageIcon("img/buffer/buffer1.gif"));
+		this.buffer.setVisible(false);
+		
+		this.telaBuffer = new JPanel(new FlowLayout());
+		
+		this.telaConexao = new TelaConexao(telaInicio, cliente);
+		
+		this.telaInformacoes = new Container();
+		this.telaInformacoes.setLayout(new BoxLayout(telaInformacoes, BoxLayout.PAGE_AXIS));
+	    
+		this.telaInicio.add(this.telaConexao.getPanelConexao());
+		
+		this.telaBuffer.add(this.buffer);
+		this.telaInformacoes.add(telaBuffer, Component.CENTER_ALIGNMENT);
+
+	    this.telaInicio.add(telaInformacoes);
 	    
 	}
-	
+	// Getter and Setters
+	public JPanel getTelaInicio() {
+		return telaInicio;
+	}
+	public void setTelaInicio(JPanel telaInicio) {
+		this.telaInicio = telaInicio;
+	}
 	// Getter and Setters
 	public TelaConexao getTelaConexao() {
 		return telaConexao;
@@ -65,10 +63,10 @@ public class TelaInicio extends JPanel{
 		this.telaConexao = telaConexao;
 	}
 	public JLabel getBuffer() {
-		return imgLoading;
+		return buffer;
 	}
 	public void setBuffer(JLabel buffer) {
-		this.imgLoading = buffer;
+		this.buffer = buffer;
 	}
 
 }

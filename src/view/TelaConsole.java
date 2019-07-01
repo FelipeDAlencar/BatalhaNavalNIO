@@ -9,67 +9,61 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TelaConsole extends JPanel{
+public class TelaConsole {
 	// Declara Telas
+	private JPanel panelConsole;
 	private Container telaConsole;
 	private JPanel cards;
-	
 	// Declara Componentes
-	private JButton player;
+	//private JButton player;
 	private JButton multiplayer;
 
 	private TelaPrincipal telaPrincipal;
-	
-	 
+	// Construtor, recebe tela Principal e 
 	public TelaConsole(JPanel cards, TelaPrincipal telaPrincipal){
 		this.telaPrincipal = telaPrincipal;
-		
+		// Recebe Cards
 		this.cards = cards;
-		
-		// Instancia Tela de Botões
-		this.setLayout(new GridLayout(3,1));
-		
+		// Instancia Tela Principal
+		this.panelConsole = new JPanel();
+		this.panelConsole.setLayout(new GridLayout(3,1));
 		// Instancia Container
 		this.telaConsole = new Container();
 		this.telaConsole.setLayout(new BoxLayout(telaConsole, BoxLayout.PAGE_AXIS));
-		
-		// Instancia Componentes - Botes (Player One, Multiplayer)
-		//this.player = new JButton("Desafiar Computador");
-		//this.player.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+		// Instancia Componentes - Botes (Player One, Multiplayer e Ranking)
+//		this.player = new JButton("Desafiar Computador");
+//		this.player.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.multiplayer = new JButton("Desafiar Jogador");
 		this.multiplayer.setAlignmentX(Component.CENTER_ALIGNMENT);
 	
 		// Cria e instancia Manipulador de Acoes
 		ButtonHandler handler = new ButtonHandler();
-		//this.player.addActionListener(handler);
+	//	this.player.addActionListener(handler);
 		this.multiplayer.addActionListener(handler);
 
 		// Adiciona Componentes a Tela
-	//	this.telaConsole.add(this.player);
+//		this.telaConsole.add(this.player);
 		this.telaConsole.add(this.multiplayer);
 
 		// Adiciona Sub-tela a Tela
-		this.add(telaConsole);
+		this.panelConsole.add(telaConsole);
 	}
-	
-	// Controlador dos Botões 
+	// Manipulador de Acoes Botoes 
 	private class ButtonHandler implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
-				//Se clicar em Desafiar Jogador
+//				if (event.getSource() == player){
+//					CardLayout cl = (CardLayout)(cards.getLayout());
+//			        cl.show(cards, "3");
+//				}
 				if (event.getSource() == multiplayer){
+					CardLayout cl = (CardLayout)(cards.getLayout());
+			        cl.show(cards, "3");
 			        telaPrincipal.getTelaJogador().setStatus(true);
 				}
-				//Mesma acão para ambos os botões
-				CardLayout cl = (CardLayout)(cards.getLayout());
-		        cl.show(cards, "3");
-		        
 		}
 	}
-	
 	// Getters and Setters
 	public Container getTelaConsole() {
 		return telaConsole;
@@ -77,5 +71,10 @@ public class TelaConsole extends JPanel{
 	public void setTelaConsole(Container telaInicio) {
 		this.telaConsole = telaInicio;
 	}
-	
+	public JPanel getPanelConsole() {
+		return panelConsole;
+	}
+	public void setPanelConsole(JPanel panelConsole) {
+		this.panelConsole = panelConsole;
+	}
 }

@@ -9,39 +9,31 @@ import socket.Cliente;
 public class TelaPrincipal extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	//Declarando telas jogo
+	// Classes do projeto
 	private JPanel telaPrincipal;
 	private TelaJogador telaJogador;
 	private TelaTabuleiro telaTabuleiro;
 	private TelaNavios telaNavios;
 	private TelaChat telaChat;
-	
-	//Declarando jogador
 	private Cliente cliente;
 	private Jogador jogador;
 
 	public TelaPrincipal(Cliente cliente, Jogador jogador) {
 		
 		try {			
-			this.telaPrincipal = new JPanel();
-			this.telaPrincipal.setLayout(new BorderLayout());
-			
+			this.telaPrincipal = new JPanel(new BorderLayout());
 			this.cliente = cliente;
-			
-			//Instanciando telas
-			this.telaJogador = new TelaJogador(jogador);
-			this.telaTabuleiro = new TelaTabuleiro(this.cliente, jogador);
-			this.telaNavios = new TelaNavios(jogador);
-			this.telaChat = new TelaChat();
-			
-			// Adicionando telas a tela principal
-			this.telaPrincipal.add(telaJogador, BorderLayout.PAGE_START);
-			this.telaPrincipal.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
-			this.telaPrincipal.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
-			this.telaPrincipal.add(telaNavios.getCards(), BorderLayout.CENTER);
-			this.telaPrincipal.add(telaChat, BorderLayout.SOUTH);
-			
-		    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			// Cria Sub-Telas 
+			telaJogador = new TelaJogador(jogador);
+			telaTabuleiro = new TelaTabuleiro(this.cliente, jogador);
+			telaNavios = new TelaNavios(jogador);
+			telaChat = new TelaChat();
+			// Adiciona Sub-Telas a Tela Principal, passado o Layout escolhido
+			telaPrincipal.add(telaJogador.getPanelPlayer(), BorderLayout.PAGE_START);
+			telaPrincipal.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
+			telaPrincipal.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
+			telaPrincipal.add(telaNavios.getCards(), BorderLayout.CENTER);
+			telaPrincipal.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
 			
 		} catch (Exception exception) {
 			System.out.println(exception);

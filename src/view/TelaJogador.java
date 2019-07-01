@@ -5,155 +5,144 @@ import javax.swing.*;
 
 import model.Jogador;
 
-public class TelaJogador extends JPanel{
+public class TelaJogador {
+	// Declara tela Principal
+	private JPanel panelPlayer;
 	// Declara Sub-Telas
-	private JPanel panelImg;
-	private JPanel panelMenu;
-	private JPanel panelLife;
-	private JPanel panelMyLife;
-	private JPanel panelLifeOpponent;
-	private JPanel panelExtras;
+	private JPanel telaImg;
+	private JPanel telaMenu;
+	private JPanel telaVida;
+	private JPanel telaOutros;
 	// Declara Sub-sub-Telas
-	private JPanel boxLife;
-	private JPanel boxLifeOpponent;
-	private JPanel boxShip;
+	private JPanel caixaVida;
+	private JPanel caixaNavios;
 	// Declara Componentes
-	private JLabel labelLife;
-	private JLabel labelLifeOpponet;
+	private JLabel vidaText;
+	private JLabel naviosText;
 	// Declara Componentes
-	private JLabel labelWaint;
-	private JLabel life[];
-	private JLabel lifeOpponent[];
-	private JLabel ship[];
-	private Jogador player;
+	private JLabel nome;
+	private JLabel vida[];
+	private JLabel navios[];
+	private Jogador jogador;
 	boolean status;
-	private JLabel labelPlayerName;
+	private JLabel jogadorNome;
 	// Construtor, recebe Jogador	
-	public TelaJogador(Jogador player) {
-		this.player = player;
+	public TelaJogador(Jogador jogador) {
+		this.jogador = jogador;
 		// Instancia Tela
-		this.setLayout(new BorderLayout());
+		this.panelPlayer = new JPanel(new BorderLayout());
 		// Instancia Sub-telas
-		this.panelImg = new JPanel();
-		this.panelMenu = new JPanel(new GridLayout(2,4));
-		this.panelImg.setLayout(new BoxLayout(panelImg,BoxLayout.Y_AXIS));
-		this.panelLife = new JPanel(new GridLayout(2,1));
-		this.panelMyLife = new JPanel(new FlowLayout());
-		this.panelLifeOpponent = new JPanel(new FlowLayout());
-		this.panelExtras = new JPanel(new BorderLayout());
+		this.telaImg = new JPanel();
+		this.telaMenu = new JPanel(new GridLayout(2,4));
+		this.telaImg.setLayout(new BoxLayout(telaImg,BoxLayout.Y_AXIS));
+		this.telaVida = new JPanel(new FlowLayout());
+		this.telaOutros = new JPanel(new BorderLayout());
 		// Instancia Sub-sub-Telas
-		this.boxLife = new JPanel(new GridLayout(1,15));
-		this.boxLifeOpponent = new JPanel(new GridLayout(1,15));
-		this.boxShip = new JPanel(new GridLayout(1,5));
+		this.caixaVida = new JPanel(new GridLayout(1,15));
+		this.caixaNavios = new JPanel(new GridLayout(1,5));
 
-		this.labelWaint = new JLabel("Agardando a jogada do oponente...");
-		this.labelLife = new JLabel("Sua Vida: ");
-		this.labelLife.setFont(new Font("Roboto", Font.BOLD, 10));
-		this.labelLifeOpponet = new JLabel("Vida do Oponente: ");
-		this.labelLifeOpponet.setFont(new Font("Roboto", Font.BOLD, 10));
-		
-		//adicionando icone vida do jogador
-		this.life = new JLabel[15];
-		for (int i =0; i<life.length; i++){
-			this.life[i] = new JLabel(new ImageIcon("img/vida/life1.jpg"));
-			this.boxLife.add(this.life[i]);
+		this.nome = new JLabel("nome");
+		this.nome.setFont(new Font("Verdana", Font.BOLD, 14));
+		this.nome.setForeground(Color.RED);
+		this.vidaText = new JLabel("Vida");
+		this.vidaText.setFont(new Font("Verdana", Font.BOLD, 22));
+		this.naviosText = new JLabel("Navios");
+		this.naviosText.setFont(new Font("Verdana", Font.BOLD, 22));
+
+		this.vida = new JLabel[15];
+		for (int i =0; i<vida.length; i++){
+			this.vida[i] = new JLabel(new ImageIcon("img/vida/vida1.jpg"));
+			this.caixaVida.add(this.vida[i]);
 		}
-		
-		//Adicionando icone vida do inimigo
-		this.lifeOpponent = new JLabel[15];
-		for (int i =0; i<lifeOpponent.length; i++){
-			this.lifeOpponent[i] = new JLabel(new ImageIcon("img/vida/life2.jpg"));
-			this.boxLifeOpponent.add(this.lifeOpponent[i]);
-		}
-		
-		
-		this.ship = new JLabel[5];
-		for (int i =0; i<ship.length; i++){
-			this.ship[i] = new JLabel();
-			this.boxShip.add(this.ship[i]);
+		this.navios = new JLabel[5];
+		for (int i =0; i<navios.length; i++){
+			this.navios[i] = new JLabel();
+			this.caixaNavios.add(this.navios[i]);
 		}
 		
 	    // Adicionando Componentes as Sub-Telas
-		this.panelMyLife.add(this.labelLife);
-		this.panelMyLife.add(this.boxLife);
-		
-		this.panelLifeOpponent.add(this.labelLifeOpponet);
-		this.panelLifeOpponent.add(this.boxLifeOpponent);
-		
-		this.panelLife.add(panelMyLife);
-		this.panelLife.add(panelLifeOpponent);
+		this.telaVida.add(this.vidaText);
+		this.telaVida.add(this.caixaVida);
 
 		// Adicionando Sub-telas a Telas
-		this.panelMenu.add(this.panelLife);
-		this.panelMenu.add(this.panelExtras);
-		this.labelPlayerName= new JLabel("Jogador: ");
-		this.panelImg.add(labelPlayerName);
-		this.panelImg.add(this.labelPlayerName);
-		this.panelImg.add(this.labelPlayerName);
-		
+		this.telaMenu.add(this.telaVida);
+		this.telaMenu.add(this.telaOutros);
+		jogadorNome= new JLabel("Jogador: ");
+		this.telaImg.add(jogadorNome);
+		this.telaImg.add(this.nome);
+		this.telaImg.add(this.nome);
 		// Adicionando Telas a Tela Principal
-		this.add(panelMenu, BorderLayout.NORTH);
-		this.add(panelImg, BorderLayout.WEST);
+		this.panelPlayer.add(telaMenu, BorderLayout.CENTER);
+		this.panelPlayer.add(telaImg, BorderLayout.WEST);
 	}
-	public JPanel getPanelImg() {
-		return panelImg;
+			
+	// Getters and Setters
+	public JPanel getPanelPlayer() {
+		return panelPlayer;
 	}
-	public void setPanelImg(JPanel panelImg) {
-		this.panelImg = panelImg;
+	public void setPanelPlayer(JPanel panelPlayer) {
+		this.panelPlayer = panelPlayer;
 	}
-	public JPanel getPanelMenu() {
-		return panelMenu;
+	public JPanel getTelaMenu() {
+		return telaMenu;
 	}
-	public void setPanelMenu(JPanel panelMenu) {
-		this.panelMenu = panelMenu;
+	public void setTelaMenu(JPanel telaMenu) {
+		this.telaMenu = telaMenu;
 	}
-	public JPanel getPanelLife() {
-		return panelLife;
+	public JPanel getTelaVida() {
+		return telaVida;
 	}
-	public void setPanelLife(JPanel panelLife) {
-		this.panelLife = panelLife;
+	public void setTelaVida(JPanel telaVida) {
+		this.telaVida = telaVida;
 	}
-	public JPanel getPanelExtras() {
-		return panelExtras;
+	public JPanel getTelaOutros() {
+		return telaOutros;
 	}
-	public void setPanelExtras(JPanel panelExtras) {
-		this.panelExtras = panelExtras;
+	public void setTelaOutros(JPanel telaOutros) {
+		this.telaOutros = telaOutros;
 	}
-	public JPanel getBoxLife() {
-		return boxLife;
+	public JPanel getCaixaVida() {
+		return caixaVida;
 	}
-	public void setBoxLife(JPanel boxLife) {
-		this.boxLife = boxLife;
+	public void setCaixaVida(JPanel caixaVida) {
+		this.caixaVida = caixaVida;
 	}
-	public JPanel getBoxShip() {
-		return boxShip;
+	public JPanel getCaixaNavios() {
+		return caixaNavios;
 	}
-	public void setBoxShip(JPanel boxShip) {
-		this.boxShip = boxShip;
+	public void setCaixaNavios(JPanel caixaNavios) {
+		this.caixaNavios = caixaNavios;
 	}
-	public JLabel getLabelLife() {
-		return labelLife;
+	public JLabel getVidaText() {
+		return vidaText;
 	}
-	public void setLabelLife(JLabel labelLife) {
-		this.labelLife = labelLife;
+	public void setVidaText(JLabel vidaText) {
+		this.vidaText = vidaText;
 	}
-	public JLabel[] getLife() {
-		return life;
+	public JLabel getNaviosText() {
+		return naviosText;
 	}
-	public void setLife(JLabel[] life) {
-		this.life = life;
+	public void setNaviosText(JLabel naviosText) {
+		this.naviosText = naviosText;
 	}
-	public JLabel[] getShip() {
-		return ship;
+
+	public JLabel getNome() {
+		return nome;
 	}
-	public void setShip(JLabel[] ship) {
-		this.ship = ship;
+	public void setNome(JLabel nome) {
+		this.nome = nome;
 	}
-	public Jogador getPlayer() {
-		return player;
+	public JLabel[] getVida() {
+		return vida;
 	}
-	public void setPlayer(Jogador player) {
-		this.player = player;
+	public void setVida(JLabel[] vida) {
+		this.vida = vida;
+	}
+	public JLabel[] getNavios() {
+		return navios;
+	}
+	public void setNavios(JLabel[] navios) {
+		this.navios = navios;
 	}
 	public boolean isStatus() {
 		return status;
@@ -161,13 +150,11 @@ public class TelaJogador extends JPanel{
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public JLabel getLabelPlayerName() {
-		return labelPlayerName;
+	public Jogador getJogador() {
+		return jogador;
 	}
-	public void setLabelPlayerName(JLabel labelPlayerName) {
-		this.labelPlayerName = labelPlayerName;
+	public void setJogador(Jogador jogador) {
+		this.jogador = jogador;
 	}
-
-	
 	
 }
