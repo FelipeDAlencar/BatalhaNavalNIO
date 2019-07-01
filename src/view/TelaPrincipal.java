@@ -35,6 +35,7 @@ public class TelaPrincipal extends JFrame {
 			telaPrincipal.add(telaNavios.getCards(), BorderLayout.CENTER);
 			telaPrincipal.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
 			
+			
 		} catch (Exception exception) {
 			System.out.println(exception);
 			exception.printStackTrace();
