@@ -37,7 +37,7 @@ public class ThreadMonitoraTelas extends Thread {
 		this.telaNavios = telaNavios;
 		this.telaChat = telaChat;
 		this.telaConexao = telaConexao;
-
+		telaJogador.getNome().setText(telaConexao.getTextFieldLogin().getText());
 		this.telaInicio = telaInicio;
 	}
 

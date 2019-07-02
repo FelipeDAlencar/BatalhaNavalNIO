@@ -97,7 +97,7 @@ public class Cliente {
 					sc.read (bb);
 				} catch (Exception e) {
 					
-					JOptionPane.showMessageDialog(null,"Comunicação inerrompida brutalmente!");
+					JOptionPane.showMessageDialog(null,"Comunicação inerrompida!");
 					System.exit(0);
 				}
 				String result = new String (bb.array ()).trim();

@@ -9,6 +9,9 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 import model.Jogador;
 import view.ThreadMonitoraTelas;
@@ -20,7 +23,7 @@ public class Servidor_NIO {
 	private final static  String HOST = "localhost";
 	private ServerSocketChannel serverSocketChannel = null;
 	private  Selector selector= null;
-	private  StringBuffer messageResponse = new StringBuffer();
+	private  StringBuffer bufferMensagem = new StringBuffer();
 	private Charset charset = Charset.forName("ISO-8859-2");
 	private StringBuffer mensagemDoCliente = new StringBuffer();
 	boolean mensagem = true;
@@ -59,9 +62,25 @@ public class Servidor_NIO {
 
 
 	public void inicializar() throws IOException{
-
-		System.out.println("Server started on port >> " + PORT);
-
+		try {
+			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				System.out.println(info.getClassName());
+				if ("Nimbus".equals(info.getName())) {
+					UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (UnsupportedLookAndFeelException e) {
+			// handle exception
+		} catch (ClassNotFoundException e) {
+			// handle exception
+		} catch (InstantiationException e) {
+			// handle exception
+		} catch (IllegalAccessException e) {
+			// handle exception
+		}
+		System.err.println("Servidor na porta >> " + PORT);
+		JOptionPane.showMessageDialog(null, "SERVIDOR ONLINE NA PORTA: " + PORT);
 		int i=0;
 
 		while (true) {
@@ -85,13 +104,13 @@ public class Servidor_NIO {
 						continue;
 					}
 
-					if (key.isAcceptable()) { // Accept client connections
+					if (key.isAcceptable()) { // Aceitando as conect.
 						i++;
 						SocketChannel channel = serverSocketChannel.accept();
 						channel.configureBlocking(false);
 						Socket socket = channel.socket();
 						SocketAddress remoteAddr = socket.getRemoteSocketAddress();
-						System.out.println("Connected to: " + remoteAddr);
+						System.out.println("Conectado a: " + remoteAddr);
 
 						channel.register(this.selector, SelectionKey.OP_READ);
 						clientes.add(channel);
@@ -123,10 +142,10 @@ public class Servidor_NIO {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		messageResponse.setLength(0);
-		messageResponse.append(addMsg);
-		messageResponse.append('\n');
-		ByteBuffer buf = charset.encode(CharBuffer.wrap(messageResponse));
+		bufferMensagem.setLength(0);
+		bufferMensagem.append(addMsg);
+		bufferMensagem.append('\n');
+		ByteBuffer buf = charset.encode(CharBuffer.wrap(bufferMensagem));
 		sc.write(buf);
 	}
 
@@ -144,7 +163,7 @@ public class Servidor_NIO {
 					n= sc.read(byteBuffer);
 				} catch (Exception e) {
 
-					JOptionPane.showMessageDialog(null,"Comunicação inerrompida brutalmente!");
+					JOptionPane.showMessageDialog(null,"Perca na comunicação");
 					System.exit(0);
 				}
 
@@ -162,7 +181,7 @@ public class Servidor_NIO {
 					return;
 				}
 				String strin = mensagemDoCliente.toString();
-				System.out.println("Mensagem recebida no servidor é : "+strin);
+				System.out.println("Mensagem recebida: "+strin);
 				servicoRequesitado(sc, strin);
 			}
 
@@ -182,7 +201,7 @@ public class Servidor_NIO {
 
 		try {
 
-			System.out.println("chegou nas responsabilidades");
+			
 
 			System.out.println("Tamanho da lista: "+clientes.size());
 
@@ -191,7 +210,7 @@ public class Servidor_NIO {
 			System.out.println("Mensagem de serviço requisitado: "+mensagem);
 
 			if (p[0] == '$') {
-				System.out.println("Entrou nesse simbolo: '$'");
+				
 
 				if (this.clientes.size() == 1){
 					writeResp(channel, "$OK2");
@@ -202,7 +221,7 @@ public class Servidor_NIO {
 					writeResp(channel, "$OK2");
 				}
 			}
-			//Marcando as escolhas seu Mapa .
+			//Marcando as escolhas no meu  mapa .
 			else if (p[0] == '#') {
 
 				System.out.println("Entrou nesse simbolo: '#'");
@@ -222,7 +241,7 @@ public class Servidor_NIO {
 					//System.out.println("COMECOU");
 				}
 			}
-			// Ataca adversario (Mapa adversario).
+			// Nor mapa adversário.
 			else if (p[0] == '@') {
 				System.out.println("Entrou nesse simbolo: '@'");
 				//		

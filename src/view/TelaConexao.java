@@ -52,8 +52,8 @@ public class TelaConexao {
 		setLoginLabel(new JLabel("Login"));
 		setTextFieldLogin(new JTextField("teste"));
 
-		setConectaServer(new JButton("Conecta no servidor"));
-		setCloseServer(new JButton("Desconecta"));
+		setConectaServer(new JButton("Conectar ao servidor"));
+		setCloseServer(new JButton("Desconectar"));
 		// Adiciona objetos na Tela (JPanel)
 		getPanelConexao().add(getServerLabel());
 		getPanelConexao().add(getTextFieldHost());
@@ -84,11 +84,12 @@ public class TelaConexao {
 				try {
 					getCliente().setStatus(getCliente().conecta());
 				} catch (Exception e) {
-					System.out.println("Erro ao iniciar comunicacao");
+					System.out.println("Erro ao iniciar comunicação");
 					e.printStackTrace();
 				} // Retorna TRUE se conectar
 				getConectaServer().setEnabled(false); // Desabilita botao Conecta
 				getCloseServer().setEnabled(true); // Habilita botao Desconecta
+				TelaJogador.jogadorNome.setText(textFieldLogin.getText());
 			} 
 			// Se botao Desconta for "apertado"
 			else if (event.getSource() == getCloseServer()) {

@@ -20,12 +20,12 @@ public class TelaJogador {
 	private JLabel vidaText;
 	private JLabel naviosText;
 	// Declara Componentes
-	private JLabel nome;
+	public static JLabel nome;
 	private JLabel vida[];
 	private JLabel navios[];
 	private Jogador jogador;
 	boolean status;
-	private JLabel jogadorNome;
+	public static JLabel jogadorNome;
 	// Construtor, recebe Jogador	
 	public TelaJogador(Jogador jogador) {
 		this.jogador = jogador;
@@ -40,7 +40,8 @@ public class TelaJogador {
 		// Instancia Sub-sub-Telas
 		this.caixaVida = new JPanel(new GridLayout(1,15));
 		this.caixaNavios = new JPanel(new GridLayout(1,5));
-
+		
+		
 		this.nome = new JLabel("nome");
 		this.nome.setFont(new Font("Verdana", Font.BOLD, 14));
 		this.nome.setForeground(Color.RED);
@@ -68,6 +69,7 @@ public class TelaJogador {
 		this.telaMenu.add(this.telaVida);
 		this.telaMenu.add(this.telaOutros);
 		jogadorNome= new JLabel("Jogador: ");
+		jogadorNome.setFont(new Font("Serif", Font.BOLD, 22));
 		this.telaImg.add(jogadorNome);
 		this.telaImg.add(this.nome);
 		this.telaImg.add(this.nome);

@@ -33,7 +33,7 @@ public class TelaPrincipal extends JFrame {
 			telaPrincipal.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
 			telaPrincipal.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
 			telaPrincipal.add(telaNavios.getCards(), BorderLayout.CENTER);
-			telaPrincipal.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
+			//telaPrincipal.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
 			
 			
 		} catch (Exception exception) {

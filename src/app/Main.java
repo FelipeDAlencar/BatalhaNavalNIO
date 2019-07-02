@@ -69,10 +69,12 @@ public class Main {
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		telaConsole.setJanela(frame);
+		
 		// Aponta o processador para thread.
 		ExecutorService service = Executors.newFixedThreadPool(1);
 		// Inicializa Thread responsavel por verificar Rodadas e controlar as Sub-Telas
 		// quando necessario.
+		
 		service.submit(new ThreadMonitoraTelas(jogador, cliente, cards, telaPrincipal.getTelaJogador(),
 				telaPrincipal.getTelaTabuleiro(), telaPrincipal.getTelaNavios(), telaPrincipal.getTelaChat(),
 				telaInicio.getTelaConexao(), telaInicio));
