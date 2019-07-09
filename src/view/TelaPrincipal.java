@@ -1,89 +1,113 @@
 package view;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Color;
 
-import model.Jogador;
-import socket.Cliente;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-public class TelaPrincipal extends JFrame {
-	
+public class TelaPrincipal extends TelaGenerica{
+
 	private static final long serialVersionUID = 1L;
-	// Classes do projeto
-	private JPanel telaPrincipal;
-	private TelaJogador telaJogador;
-	private TelaTabuleiro telaTabuleiro;
-	private TelaNavios telaNavios;
-	private TelaChat telaChat;
-	private Cliente cliente;
-	private Jogador jogador;
 
-	public TelaPrincipal(Cliente cliente, Jogador jogador) {
-		
-		try {			
-			this.telaPrincipal = new JPanel(new BorderLayout());
-			this.cliente = cliente;
-			// Cria Sub-Telas 
-			telaJogador = new TelaJogador(jogador);
-			telaTabuleiro = new TelaTabuleiro(this.cliente, jogador);
-			telaNavios = new TelaNavios(jogador);
-			telaChat = new TelaChat();
-			// Adiciona Sub-Telas a Tela Principal, passado o Layout escolhido
-			telaPrincipal.add(telaJogador.getPanelPlayer(), BorderLayout.PAGE_START);
-			telaPrincipal.add(telaTabuleiro.getTabuleiro1(), BorderLayout.LINE_START);
-			telaPrincipal.add(telaTabuleiro.getTabuleiro2(), BorderLayout.LINE_END);
-			telaPrincipal.add(telaNavios.getCards(), BorderLayout.CENTER);
-			//telaPrincipal.add(telaChat.getPanelChat(), BorderLayout.SOUTH);
-			
-			
-		} catch (Exception exception) {
-			System.out.println(exception);
-			exception.printStackTrace();
-		}
-	}
+	private JLabel namePlayer1, namePlayer2, lifePlayer1, lifePlayer2;
+	private JPanel boxLife1, boxLife2;
+	private TelaTabuleiro tab;
 	
-	// Getter and Setters
-	public JPanel getTelaPrincipal() {
-		return telaPrincipal;
+	public TelaPrincipal(int altura, int largura) {
+		super(altura, largura);
+		this.setLayout(null);
+		
+		this.namePlayer1 = new JLabel("Seu Nome: Name Player");
+		this.namePlayer1.setBounds(20,10,300,60);
+		this.add(this.namePlayer1);
+		
+		this.namePlayer2 = new JLabel("Nome do Inimigo: Name Player");
+		this.namePlayer2.setBounds(700,10,300,60);
+		this.add(this.namePlayer2);
+		
+		
+		this.lifePlayer1 = new JLabel("Vida P1 |");
+		this.lifePlayer1.setBounds(380,25,300,60);
+		this.add(this.lifePlayer1);
+		
+		this.lifePlayer2 = new JLabel("| Vida P2");
+		this.lifePlayer2.setBounds(440,25,300,60);
+		this.add(this.lifePlayer2);
+		
+		this.boxLife1 = new JPanel();
+		this.boxLife1.setBackground(new Color(10,255,15));
+		this.boxLife1.setBounds(205,45,160,20);
+		this.add(this.boxLife1);
+		
+		this.boxLife2 = new JPanel();
+		this.boxLife2.setBackground(new Color(255,10,15));
+		this.boxLife2.setBounds(510,45,160,20);
+		this.add(this.boxLife2);
+		
+		this.tab = new TelaTabuleiro();
+		this.tab.setBounds(50,100,900,470);
+		this.add(this.tab);
+
 	}
-	public void setTelaPrincipal(JPanel telaPrincipal) {
-		this.telaPrincipal = telaPrincipal;
+
+	public JLabel getNamePlayer1() {
+		return namePlayer1;
 	}
-	public TelaJogador getTelaJogador() {
-		return telaJogador;
+
+	public void setNamePlayer1(JLabel namePlayer1) {
+		this.namePlayer1 = namePlayer1;
 	}
-	public void setTelaJogador(TelaJogador telaPlayer) {
-		this.telaJogador = telaPlayer;
+
+	public JLabel getNamePlayer2() {
+		return namePlayer2;
 	}
-	public TelaTabuleiro getTelaTabuleiro() {
-		return telaTabuleiro;
+
+	public void setNamePlayer2(JLabel namePlayer2) {
+		this.namePlayer2 = namePlayer2;
 	}
-	public void setTelaTabuleiro(TelaTabuleiro telaTabuleiro) {
-		this.telaTabuleiro = telaTabuleiro;
+
+
+	public JLabel getLifePlayer1() {
+		return lifePlayer1;
 	}
-	public TelaNavios getTelaNavios() {
-		return telaNavios;
+
+	public void setLifePlayer1(JLabel lifePlayer1) {
+		this.lifePlayer1 = lifePlayer1;
 	}
-	public void setTelaNavios(TelaNavios telaNavios) {
-		this.telaNavios = telaNavios;
+
+	public JLabel getLifePlayer2() {
+		return lifePlayer2;
 	}
-	public TelaChat getTelaChat() {
-		return telaChat;
+
+	public void setLifePlayer2(JLabel lifePlayer2) {
+		this.lifePlayer2 = lifePlayer2;
 	}
-	public void setTelaChat(TelaChat telaChat) {
-		this.telaChat = telaChat;
+
+	public JPanel getBoxLife1() {
+		return boxLife1;
 	}
-	public Cliente getCliente() {
-		return cliente;
+
+	public void setBoxLife1(JPanel boxLife1) {
+		this.boxLife1 = boxLife1;
 	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+
+	public JPanel getBoxLife2() {
+		return boxLife2;
 	}
-	public Jogador getJogador() {
-		return jogador;
+
+	public void setBoxLife2(JPanel boxLife2) {
+		this.boxLife2 = boxLife2;
 	}
-	public void setJogador(Jogador player) {
-		this.jogador = player;
+
+	public TelaTabuleiro getTab() {
+		return tab;
 	}
+
+	public void setTab(TelaTabuleiro tab) {
+		this.tab = tab;
+	}
+
+
+	
 	
 }
